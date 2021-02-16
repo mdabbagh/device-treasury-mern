@@ -19,29 +19,34 @@ router.route('/login').post((req, res) => {
         res.status(400).json("FAILED password check");
       } else {
         const userDetails = {id: user.id, isAdmin: user.isAdmin, fullname: user.fullname, email: user.email};
-        const token = generateAccessToken(user.id);
-        const refreshToken = jwt.sign({id: user.id}, process.env.REFRESH_SECRET_TOKEN, {expiresIn: '24h'})
-        res.status(200).json({authenticated: true, token: token, refreshToken: refreshToken, user: userDetails});
+        const accessToken = generateAccessToken(user.id);
+        const refreshToken = jwt.sign({id: user.id}, process.env.REFRESH_SECRET_TOKEN, {expiresIn: '5m'});
+        let userId = user.id;
+        let refToken = new Token({userId: userId, token: refreshToken})
+        refToken.save()
+        res.status(200).json({authenticated: true, accessToken: accessToken, refreshToken: refreshToken, user: userDetails});
       }
     })
   })
 });
 
 router.route('/token').post((req, res) => {
-  const refreshToken = req.body.token;
+  const refreshToken = req.body.refreshToken;
   if (refreshToken === null) return res.status(401);
-  Token.findOne({'token': refreshToken}).then((token, err) => {
+  Token.findOne({'token': refreshToken}).then((result, err) => {
     if (err) return res.status(403);
-    jwt.verify(refreshToken, process.env.REFRESH_SECRET_TOKEN).then((err, userId) => {
-      if (err) return res.status(403);
-      const accessToken = generateAccessToken(userId);
-      res.status(200).json({authenticated: true, token: accessToken})
-    })
+    jwt.verify(refreshToken, process.env.REFRESH_SECRET_TOKEN, function(err, decoded) {
+      if(err) {
+        return res.status(403).json({ error: err });
+      }
+      const accessToken = generateAccessToken(result.userId);
+      res.status(200).json({authenticated: true, accessToken: accessToken});
+    });
   })
 })
 
 function generateAccessToken(userId) {
-  return jwt.sign({id: userId}, process.env.SECRET_TOKEN, {expiresIn: '30m'})
+  return jwt.sign({id: userId}, process.env.SECRET_TOKEN, {expiresIn: '2m'});
 }
 
 module.exports = router;

@@ -25,27 +25,26 @@ function App(props) {
   
   const setMainUser = (data) => {
     if(data === null) {
-      localStorage.setItem("user", null);
-      localStorage.setItem("token", null);
-      setCurrUser();
+      localStorage.clear();
+      setCurrUser(null);
     } else {
       localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken)
       setCurrUser(data.user);
     }
   }
 
   useEffect(() => {
+    // TODO: See if we still need this
     if(currUser) {
-      let token = localStorage.getItem("token");
-      let exp = jwt.decode(token).exp
-      console.log("THE EXP IS: " + exp);
+      let token = localStorage.getItem("accessToken");
+      let exp = jwt.decode(token).exp;
       if (Date.now() >= exp * 1000) {
-        console.log("IN IF");
-        setMainUser(null)
+        setMainUser(null);
       }
     }
-  }, [currUser])
+  }, [])
 
   return (
     <UserContext.Provider value={{ currUser, setCurrUser: setMainUser }}>

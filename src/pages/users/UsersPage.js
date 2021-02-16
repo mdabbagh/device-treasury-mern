@@ -6,8 +6,6 @@ import { useUserContext } from "../../context/user.context";
 
 function UsersPage(props) {
   const [users, setUsers] = useState("");
-  const {currUser, setCurrUser} = useUserContext();
-  const [isLoggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
       UserService.getAll().then(res => {
@@ -15,12 +13,6 @@ function UsersPage(props) {
           setUsers(res.data);
         }
       })
-  }, [])
-
-  useEffect(() => {
-    if(currUser) {
-      setLoggedIn(true);
-    }
   }, [])
 
   function deleteUser(id) {

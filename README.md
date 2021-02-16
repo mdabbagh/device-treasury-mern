@@ -2,13 +2,14 @@
 
 In the project directory, you can run:
 
+### `npm run start-express`
+
+Runs the backend express server that serves the API. The default port is 3001 if one is not provided.
+
 ### `npm start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
 ### `npm test`
 
