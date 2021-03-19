@@ -20,7 +20,7 @@ router.route('/login').post((req, res) => {
       } else {
         const userDetails = {id: user.id, isAdmin: user.isAdmin, fullname: user.fullname, email: user.email};
         const accessToken = generateAccessToken(user.id);
-        const refreshToken = jwt.sign({id: user.id}, process.env.REFRESH_SECRET_TOKEN, {expiresIn: '5m'});
+        const refreshToken = jwt.sign({id: user.id}, process.env.REFRESH_SECRET_TOKEN, {expiresIn: '24h'});
         let userId = user.id;
         let refToken = new Token({userId: userId, token: refreshToken})
         refToken.save()
@@ -46,7 +46,7 @@ router.route('/token').post((req, res) => {
 })
 
 function generateAccessToken(userId) {
-  return jwt.sign({id: userId}, process.env.SECRET_TOKEN, {expiresIn: '2m'});
+  return jwt.sign({id: userId}, process.env.SECRET_TOKEN, {expiresIn: '30m'});
 }
 
 module.exports = router;

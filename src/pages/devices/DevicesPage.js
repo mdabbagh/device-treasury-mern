@@ -4,7 +4,9 @@ import DeviceService from '../../services/device.service';
 import Device from '../../components/Device';
 
 function DevicesPage(props) {
-  const [devices, setDevices] = useState("");
+  const [devices, setDevices] = useState();
+  const [unavailableDevices, setUnavailableDevices] = useState({});
+  const [count, setCount] = useState()
 
   useEffect(() => {
     DeviceService.getAll()
@@ -18,14 +20,44 @@ function DevicesPage(props) {
   function deleteDevice(id) {
     DeviceService.deleteDevice(id)
       .then(res => console.log(res.data));
-    
     setDevices(devices.filter(device => device._id != id));
   }
 
+  function checkoutDevice(id) {
+    console.log("About to checkout device");
+    console.log(id);
+    DeviceService.checkoutDevice(id)
+      .then(res => {
+        console.log("Device checked out");
+        
+      }).then(() => {
+        console.log("after device checkout")
+        let newCount = count + 1;
+        setCount(newCount);
+      })
+      .catch(err => "Error checking out device: " + err);
+    console.log("after device checkedout")
+    let newCount = count + 1;
+    setCount(newCount);
+  }
+
+  function checkinDevice(id) {
+    DeviceService.checkinDevice(id)
+      .then(res => {
+        console.log("Device checked in");
+      }).then(() => {
+        console.log("after device checkin")
+        let newCount = count + 1;
+        setCount(newCount);
+      })
+      .catch(err => "Error checking out device: " + err);
+    
+  }
+
   function devicesList() {
-    if(devices != '') {
+    if(devices) {
       return devices.map(currDevice => {
-        return <Device device={currDevice} deleteDevice={deleteDevice} key={currDevice._id} />;
+        return <Device device={currDevice} deleteDevice={deleteDevice} checkoutDevice={checkoutDevice} checkinDevice={checkinDevice} key={currDevice._id} />;
       });
     }
   }

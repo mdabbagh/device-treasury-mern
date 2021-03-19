@@ -22,6 +22,15 @@ class DeviceService {
   deleteDevice(id) {
     return http.delete('/api/devices/delete/' + id);
   }
+
+  checkoutDevice(id) {
+    console.log("IN CHECKOUT SERVICE " + id)
+    return http.post('/api/devices/checkout/' + id);
+  }
+
+  checkinDevice(id) {
+    return http.post('/api/devices/checkin/' + id);
+  }
 }
 
 export default new DeviceService();

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import UserService from '../../services/user.service';
 import User from '../../components/User';
-import { useUserContext } from "../../context/user.context";
 
 function UsersPage(props) {
   const [users, setUsers] = useState("");
