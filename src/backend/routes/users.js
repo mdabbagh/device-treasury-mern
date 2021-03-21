@@ -25,8 +25,10 @@ router.route('/add').post([authMiddleware,adminMiddleware], (req, res) => {
 
 // Get a user
 router.route('/:id').get(authMiddleware, (req, res) => {
+  console.log("The id is : " + req.params.id)
   User.findById(req.params.id).select('-password')
     .then(user => {
+      console.log("THE USER IS: " + user);
       res.json(user)
     })
     .catch(err => res.status(400).json('Error: ' + err));

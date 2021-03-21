@@ -5,10 +5,11 @@ import Device from '../../components/Device';
 
 function DevicesPage(props) {
   const [devices, setDevices] = useState();
-  const [unavailableDevices, setUnavailableDevices] = useState({});
-  const [count, setCount] = useState()
+  const [count, setCount] = useState();
+  const [availableDevices, setAvailableDevices] = useState()
 
   useEffect(() => {
+    setCount(Math.random())
     DeviceService.getAll()
       .then(res => {
         if(res.data.length > 0) {
@@ -17,6 +18,10 @@ function DevicesPage(props) {
       });
   }, [])
 
+  function updateCount() {
+    setCount(Math.random());
+  }
+
   function deleteDevice(id) {
     DeviceService.deleteDevice(id)
       .then(res => console.log(res.data));
@@ -24,34 +29,13 @@ function DevicesPage(props) {
   }
 
   function checkoutDevice(id) {
-    console.log("About to checkout device");
-    console.log(id);
     DeviceService.checkoutDevice(id)
-      .then(res => {
-        console.log("Device checked out");
-        
-      }).then(() => {
-        console.log("after device checkout")
-        let newCount = count + 1;
-        setCount(newCount);
-      })
-      .catch(err => "Error checking out device: " + err);
-    console.log("after device checkedout")
-    let newCount = count + 1;
-    setCount(newCount);
+      .then(() => window.location.reload()) // BAD, couldn't figure out how to rerender the DevicesPage
   }
 
   function checkinDevice(id) {
     DeviceService.checkinDevice(id)
-      .then(res => {
-        console.log("Device checked in");
-      }).then(() => {
-        console.log("after device checkin")
-        let newCount = count + 1;
-        setCount(newCount);
-      })
-      .catch(err => "Error checking out device: " + err);
-    
+      .then(res => window.location.reload()) // BAD, couldn't figure out how to rerender the DevicesPage
   }
 
   function devicesList() {
