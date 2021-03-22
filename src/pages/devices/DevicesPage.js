@@ -6,7 +6,6 @@ import Device from '../../components/Device';
 function DevicesPage(props) {
   const [devices, setDevices] = useState();
   const [count, setCount] = useState();
-  const [availableDevices, setAvailableDevices] = useState()
 
   useEffect(() => {
     setCount(Math.random())
@@ -17,10 +16,6 @@ function DevicesPage(props) {
         }
       });
   }, [])
-
-  function updateCount() {
-    setCount(Math.random());
-  }
 
   function deleteDevice(id) {
     DeviceService.deleteDevice(id)
