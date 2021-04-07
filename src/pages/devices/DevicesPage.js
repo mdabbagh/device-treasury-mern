@@ -1,20 +1,34 @@
 import React, { useState, useEffect } from 'react';
 
+import CheckoutService from '../../services/checkout.service';
 import DeviceService from '../../services/device.service';
+import UserService from '../../services/user.service';
 import Device from '../../components/Device';
+import { useUserContext } from "../../context/user.context";
 
 function DevicesPage(props) {
-  const [devices, setDevices] = useState();
-  const [count, setCount] = useState();
+  const [devices, setDevices] = useState([]);
+  const [userDevices, setUserDevices] = useState([]);
+  const {currUser} = useUserContext();
 
   useEffect(() => {
-    setCount(Math.random())
+    // Get all devices to populate whole list
     DeviceService.getAll()
       .then(res => {
         if(res.data.length > 0) {
           setDevices(res.data);
         }
       });
+  }, [])
+
+  useEffect(() => {
+    // Get current user devices
+    // setUserDevices
+
+    // Or just query current user info?
+    UserService.getUser(currUser.id).then((res) => {
+      setUserDevices(res.data.devices)
+    })
   }, [])
 
   function deleteDevice(id) {
@@ -24,19 +38,47 @@ function DevicesPage(props) {
   }
 
   function checkoutDevice(id) {
+    // Checkout device
+    // Update current devices list
+    // Update userDevices
     DeviceService.checkoutDevice(id)
-      .then(() => window.location.reload()) // BAD, couldn't figure out how to rerender the DevicesPage
+      .then(res => {
+        if(res.data.length > 0) {
+          setDevices(res.data);
+        }
+        UserService.getUser(currUser.id).then(res => {
+          if(res.data.length > 0) {
+            setUserDevices(res.data.devices);
+          }
+        })
+        window.location.reload();
+      }); // BAD, couldn't figure out how to rerender the DevicesPage
   }
 
   function checkinDevice(id) {
+    // Checkin device
+    // Update current devices list
+    // Update userDevices
     DeviceService.checkinDevice(id)
-      .then(res => window.location.reload()) // BAD, couldn't figure out how to rerender the DevicesPage
+      .then(res => {
+        if(res.data.length > 0) {
+          setDevices(res.data);
+        }
+        UserService.getUser(currUser.id).then(res => {
+          if(res.data.length > 0) {
+            setUserDevices(res.data.devices);
+          }
+        })
+        window.location.reload();
+      }); // BAD, couldn't figure out how to rerender the DevicesPage
   }
 
   function devicesList() {
-    if(devices) {
+    if(devices.length > 0) {
       return devices.map(currDevice => {
-        return <Device device={currDevice} deleteDevice={deleteDevice} checkoutDevice={checkoutDevice} checkinDevice={checkinDevice} key={currDevice._id} />;
+        return (
+          <Device device={currDevice} userDevices={userDevices} deleteDevice={deleteDevice} checkoutDevice={checkoutDevice} checkinDevice={checkinDevice} key={currDevice._id} />
+        );
       });
     }
   }
@@ -58,6 +100,7 @@ function DevicesPage(props) {
       </table>
     </div>
   )
+  
 }
 
 export default DevicesPage;

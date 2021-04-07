@@ -1,7 +1,9 @@
 const router = require('express').Router();
 var Device = require('../models/device.model');
+var Checkout = require('../models/checkout.model')
 const authMiddleware = require("../middleware/auth.middleware");
 const adminMiddleware = require("../middleware/admin.middleware");
+const User = require('../models/user.model');
 
 // Get devices
 router.route('/').get(authMiddleware, (req, res) => {
@@ -75,24 +77,57 @@ router.route('/checkout/:id').post([authMiddleware], (req, res) => {
   console.log("Checkout device service called")
   Device.findById(req.params.id)
     .then(device => {
-      device.available = false;
-      device.save()
-        .then(() => res.status(200).json("Device checked out"))
-        .catch((err) => res.status(400).json('Error: ' + err));
-    })
-    .catch(err => res.status(400).json('Error: ' + err));
+      var checkOut = new Checkout();
+      checkOut.user_id = req.user
+      checkOut.device_id = device._id
+      checkOut.action = "CHECKOUT"
+      checkOut.save()
+        .then(() => {
+          console.log("THE USER IS: " + req.user)
+          User.findByIdAndUpdate(
+            req.user,
+            { $push: { devices: device._id } },
+            { new: true, useFindAndModify: false })
+            .then(() => {
+              device.available = false;
+              device.save()
+                .then(() => {
+                  Device.find()
+                    .then(devices => res.status(200).json(devices))
+                })
+                .catch((err) => res.status(400).json('Error: ' + err));
+            })
+        })
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
 });
 
 // Checking a device
 router.route('/checkin/:id').post([authMiddleware], (req, res) => {
   Device.findById(req.params.id)
     .then(device => {
-      device.available = true;
-      device.save()
-        .then(() => res.status(200).json("Device checked in"))
-        .catch((err) => res.status(400).json('Error: ' + err));
-    })
-    .catch(err => res.status(400).json('Error: ' + err));
+      var checkOut = new Checkout();
+      checkOut.user_id = req.user
+      checkOut.device_id = device._id
+      checkOut.action = "CHECKIN"
+      checkOut.save()
+        .then(() => {
+          User.findByIdAndUpdate(
+            req.user,
+            { $pull: { devices: device._id } },
+            { new: true, useFindAndModify: false })
+            .then(() => {
+              device.available = true;
+              device.save()
+                .then(() => {
+                  Device.find()
+                    .then(devices => res.status(200).json(devices))
+                })
+                .catch((err) => res.status(400).json('Error: ' + err));
+            })
+        })
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
 });
 
 module.exports = router;

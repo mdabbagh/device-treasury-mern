@@ -19,12 +19,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 6
-  },
+  },  
   isAdmin: {
     type: Boolean,
     default: false,
     required: true
   },
+  devices: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Device"
+    }
+  ]
 }, {
   timestamps: true,
 });
