@@ -1,6 +1,6 @@
 const router = require('express').Router();
 var Device = require('../models/device.model');
-var Checkout = require('../models/checkout.model')
+var CheckoutHistory = require('../models/checkout.history.model')
 const authMiddleware = require("../middleware/auth.middleware");
 const adminMiddleware = require("../middleware/admin.middleware");
 const User = require('../models/user.model');
@@ -72,16 +72,15 @@ router.route('/update/:id').post([authMiddleware,adminMiddleware], (req, res) =>
     .catch((err) => res.status(400).json('Error: ' + err));
 });
 
-// Checkout a device
+// CheckoutHistory a device
 router.route('/checkout/:id').post([authMiddleware], (req, res) => {
-  console.log("Checkout device service called")
   Device.findById(req.params.id)
     .then(device => {
-      var checkOut = new Checkout();
-      checkOut.user_id = req.user
-      checkOut.device_id = device._id
-      checkOut.action = "CHECKOUT"
-      checkOut.save()
+      var checkout = new CheckoutHistory();
+      checkout.user_id = req.user
+      checkout.device_id = device._id
+      checkout.action = "CHECKOUT"
+      checkout.save()
         .then(() => {
           console.log("THE USER IS: " + req.user)
           User.findByIdAndUpdate(
@@ -106,11 +105,11 @@ router.route('/checkout/:id').post([authMiddleware], (req, res) => {
 router.route('/checkin/:id').post([authMiddleware], (req, res) => {
   Device.findById(req.params.id)
     .then(device => {
-      var checkOut = new Checkout();
-      checkOut.user_id = req.user
-      checkOut.device_id = device._id
-      checkOut.action = "CHECKIN"
-      checkOut.save()
+      var checkout = new CheckoutHistory();
+      checkout.user_id = req.user
+      checkout.device_id = device._id
+      checkout.action = "CHECKIN"
+      checkout.save()
         .then(() => {
           User.findByIdAndUpdate(
             req.user,

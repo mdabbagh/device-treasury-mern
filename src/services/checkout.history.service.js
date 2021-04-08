@@ -1,7 +1,7 @@
 // Service used by React to make api calls to the backend
 import http from './http';
 
-class CheckoutService {
+class CheckoutHistoryService {
   getCheckoutsHistoryAll() {
     return http.get('/api/checkouts/history');
   }
@@ -19,4 +19,4 @@ class CheckoutService {
   }
 }
 
-export default new CheckoutService();
+export default new CheckoutHistoryService();

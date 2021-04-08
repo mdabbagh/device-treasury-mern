@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import CheckoutService from '../../services/checkout.service';
 import DeviceService from '../../services/device.service';
 import UserService from '../../services/user.service';
 import Device from '../../components/Device';
@@ -52,13 +51,10 @@ function DevicesPage(props) {
           }
         })
         window.location.reload();
-      }); // BAD, couldn't figure out how to rerender the DevicesPage
+      }); // BAD, couldn't figure out how to rerender the DevicesPage without a reload
   }
 
   function checkinDevice(id) {
-    // Checkin device
-    // Update current devices list
-    // Update userDevices
     DeviceService.checkinDevice(id)
       .then(res => {
         if(res.data.length > 0) {
@@ -70,7 +66,7 @@ function DevicesPage(props) {
           }
         })
         window.location.reload();
-      }); // BAD, couldn't figure out how to rerender the DevicesPage
+      }); // BAD, couldn't figure out how to rerender the DevicesPage without a reload
   }
 
   function devicesList() {
@@ -100,7 +96,6 @@ function DevicesPage(props) {
       </table>
     </div>
   )
-  
 }
 
 export default DevicesPage;

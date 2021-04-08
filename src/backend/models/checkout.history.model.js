@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-const checkoutSchema = new mongoose.Schema({
+const checkoutHistorySchema = new mongoose.Schema({
   user_id: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -21,6 +21,6 @@ const checkoutSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-const Checkout = mongoose.model("checkouts", checkoutSchema);
+const CheckoutHistory = mongoose.model("checkouts", checkoutHistorySchema);
 
-module.exports = Checkout;
+module.exports = CheckoutHistory;

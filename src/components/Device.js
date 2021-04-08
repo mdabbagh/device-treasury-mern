@@ -1,8 +1,6 @@
-import { PromiseProvider } from 'mongoose';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useUserContext } from "../context/user.context";
-import CheckoutService from '../services/checkout.service';
 
 function Device(props) {
   const {currUser} = useUserContext();
@@ -13,16 +11,16 @@ function Device(props) {
       <td>{props.device.category}</td>
       <td>{props.device.make}</td>
       <td>{props.device.modelName}</td>
-      <td>
-        { props.device.available && !props.userDevices.includes(props.device._id) &&
-            <button type="button" className="btn btn-primary" onClick={() => {props.checkoutDevice(props.device._id)}}>Checkout</button>
+      <td>{(() => {
+        if (props.device.available && !props.userDevices.includes(props.device._id)) {
+          return <button type="button" className="btn btn-primary" onClick={() => {props.checkoutDevice(props.device._id)}}>Checkout</button>
+        } else if(!props.device.available && props.userDevices.includes(props.device._id)) {
+          return <button type="button" className="btn btn-primary" onClick={() => {props.checkinDevice(props.device._id)}}>Checkin</button>
+        } else {
+          return <button type="button" className="invisible"></button>
         }
-        { !props.device.available && props.userDevices.includes(props.device._id) &&
-            <button type="button" className="btn btn-primary" onClick={() => {props.checkinDevice(props.device._id)}}>Checkin</button>
-        }
-        { !props.device.available && !props.userDevices.includes(props.device._id) &&
-            <button type="button" className="btn btn-primary" onClick={() => {props.checkinDevice(props.device._id)}}>Blah</button>
-        }
+        // Else we don't render anything since the 
+      })()}
       </td>
       {
         currUser.isAdmin?

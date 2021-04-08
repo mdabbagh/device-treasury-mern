@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 const usersRoutes = require('./routes/users');
 const devicesRoutes = require('./routes/devices');
 const authRoutes = require('./routes/auth');
-const checkoutRoutes = require('./routes/checkouts')
+const checkoutRoutes = require('./routes/checkoutsHistory')
 
 app.use('/api/users', usersRoutes);
 app.use('/api/devices', devicesRoutes);
