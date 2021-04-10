@@ -21,10 +21,6 @@ function DevicesPage(props) {
   }, [])
 
   useEffect(() => {
-    // Get current user devices
-    // setUserDevices
-
-    // Or just query current user info?
     UserService.getUser(currUser.id).then((res) => {
       setUserDevices(res.data.devices)
     })

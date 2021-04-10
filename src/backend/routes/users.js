@@ -28,8 +28,7 @@ router.route('/:id').get(authMiddleware, (req, res) => {
   console.log("The id is : " + req.params.id)
   User.findById(req.params.id).select('-password')
     .then(user => {
-      console.log("THE USER IS: " + user);
-      res.json(user)
+      res.status(200).json(user)
     })
     .catch(err => res.status(400).json('Error: ' + err));
 });

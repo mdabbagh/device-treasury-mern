@@ -2,18 +2,19 @@
 import http from './http';
 
 class CheckoutHistoryService {
-  getCheckoutsHistoryAll() {
-    return http.get('/api/checkouts/history');
+  getAllHistory() {
+    return http.get('/api/checkouts/history')
+      .catch(ex => console.log(('ERR: ' + ex)));
   }
 
   // Get user checkout history
-  get(id) {
+  getUserHistory(id) {
     return http.get('/api/checkouts/history/user/' + id)
       .catch(ex => console.log('ERR: ' + ex));
   }
 
   // Get device checkout history
-  get(id) {
+  getDeviceHistory(id) {
     return http.get('/api/checkouts/history/device/' + id)
       .catch(ex => console.log('ERR: ' + ex));
   }

@@ -17,9 +17,8 @@ function Device(props) {
         } else if(!props.device.available && props.userDevices.includes(props.device._id)) {
           return <button type="button" className="btn btn-primary" onClick={() => {props.checkinDevice(props.device._id)}}>Checkin</button>
         } else {
-          return <button type="button" className="invisible"></button>
+          return <button type="button" className="invisible"></button> // This is in case something goes wrong above, we keep the right columns under the headers
         }
-        // Else we don't render anything since the 
       })()}
       </td>
       {
