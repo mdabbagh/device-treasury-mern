@@ -20,7 +20,7 @@ function Header(props) {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            { 
+            {
               !currUser ? 
                 <li className="nav-item">
                   <NavLink to="/login" className="nav-link">Login</NavLink>
@@ -43,6 +43,12 @@ function Header(props) {
               <NavLink to="/about" className="nav-link">About</NavLink>
             </li>
           </ul>
+          <div className="nav-item">
+              {
+                currUser? <NavLink to={{pathname: "/users/" + currUser.id}} className="nav-link">{currUser.fullname}</NavLink>
+                : null
+              } 
+          </div>
         </div>
       </nav>
   );

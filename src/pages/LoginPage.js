@@ -7,7 +7,7 @@ function LoginPage() {
   const {currUser, setCurrUser} = useUserContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState(false);
 
   const postLogin = e => {
     e.preventDefault();
@@ -16,10 +16,12 @@ function LoginPage() {
       password: password,
     }
     AuthService.login(creds).then(res => {
+      console.log("THE RES IS: ")
+      console.log(res) 
       if (res.status === 200) {
         setCurrUser(res.data);
       } else {
-        setIsError(true);
+        setError(true);
       }
     })
   }
@@ -30,6 +32,13 @@ function LoginPage() {
 
   return (
     <div>
+      {
+        error && 
+          <div className="alert alert-danger" role="alert" style={{margin: "0px 0px 20px 0px"}}>
+            Failed to log in.
+          </div>
+      }
+      
       <form onSubmit={postLogin}>
         <div className="form-group">
           <label htmlFor="emailAddress">Email address</label>
@@ -51,7 +60,6 @@ function LoginPage() {
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
-      { isError &&<div>The username or password provided were incorrect!</div> }
     </div>
   );
 }

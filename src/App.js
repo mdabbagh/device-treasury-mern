@@ -50,7 +50,7 @@ function App(props) {
     <UserContext.Provider value={{ currUser, setCurrUser: setMainUser }}>
         <div>
           <Header />
-          <div className="container-fluid">
+          <div className="container-fluid" id="mainContent" style={{paddingTop: "15px"}}>
             <Switch>
               <Route path="/login" exact component={LoginPage} />
               <Route path="/about" exact component={AboutPage} />

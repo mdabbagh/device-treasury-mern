@@ -35,7 +35,7 @@ function HomePage() {
     <div>
       {
         currUser &&
-          <div style={{margin: "10px 0px 10px 0px"}}>Welcome {currUser.fullname}</div>
+          <h1 style={{margin: "10px 0px 10px 0px"}}>Welcome {currUser.fullname}</h1>
       }
       <h3>History</h3>
       <table className="table">
