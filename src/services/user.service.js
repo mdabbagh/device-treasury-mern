@@ -9,10 +9,7 @@ class UserService {
 
   getUser(id) {
     return http.get('/api/users/' + id)
-      .catch(ex => {
-        if(ex.response.status === 401)
-        console.log('ERR: ' + ex)
-      });
+      .catch(ex => console.log(ex));
   }
 
   createUser(user) {

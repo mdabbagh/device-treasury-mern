@@ -16,8 +16,6 @@ function LoginPage() {
       password: password,
     }
     AuthService.login(creds).then(res => {
-      console.log("THE RES IS: ")
-      console.log(res) 
       if (res.status === 200) {
         setCurrUser(res.data);
       } else {

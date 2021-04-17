@@ -9,7 +9,6 @@ function User(props) {
     <tr>
       <td><Link to={"/users/" + props.user._id}>{props.user.fullname}</Link></td>
       <td>{props.user.email}</td>
-      
       {
         currUser.isAdmin?
           <>

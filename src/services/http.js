@@ -48,7 +48,6 @@ http.interceptors.response.use(function(response) {
             localStorage.clear();
             originalRequest._retry = false;
             window.location.href = '/login';
-            console.log("Error trying to refresh token.");
           });
       }
       

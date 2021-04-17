@@ -24,7 +24,6 @@ class DeviceService {
   }
 
   checkoutDevice(id) {
-    console.log("IN CHECKOUT SERVICE " + id)
     return http.post('/api/devices/checkout/' + id);
   }
 

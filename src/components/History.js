@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 function History(props) {
 
-  console.log(window.location.href.includes('users'))
-
   return (
     <tr>
       <td>{props.history.createdAt}</td>

@@ -3,7 +3,6 @@ var User = require('../models/user.model');
 
 const admin = (req, res, next) => { 
   try { 
-    //console.log("THE REQ IN MIDDLEWARE IS: " + JSON.stringify(req.headers))
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
     if (!token) return res.status(401).json({ error: "No authentication token, access denied" }); 

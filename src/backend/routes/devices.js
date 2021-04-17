@@ -82,7 +82,6 @@ router.route('/checkout/:id').post([authMiddleware], (req, res) => {
       checkout.action = "CHECKOUT"
       checkout.save()
         .then(() => {
-          console.log("THE USER IS: " + req.user)
           User.findByIdAndUpdate(
             req.user,
             { $push: { devices: device._id } },

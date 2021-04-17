@@ -24,7 +24,6 @@ function UserEditPage(props) {
     }
 
     UserService.updateUser(props.match.params.id, user).then(res => {
-      console.log("User updated");
       window.location = '/';
     });
   }

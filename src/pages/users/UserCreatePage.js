@@ -19,7 +19,6 @@ function UserCreatePage(props) {
     }
 
     UserService.createUser(user).then(res => {
-      console.log("Sent create user");
       if(res.status === 200) {
         window.location = '/';
       }

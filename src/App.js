@@ -35,17 +35,6 @@ function App(props) {
     }
   }
 
-  useEffect(() => {
-    // TODO: See if we still need this
-    if(currUser) {
-      let token = localStorage.getItem("accessToken");
-      let exp = jwt.decode(token).exp;
-      if (Date.now() >= exp * 1000) {
-        setMainUser(null);
-      }
-    }
-  }, [])
-
   return (
     <UserContext.Provider value={{ currUser, setCurrUser: setMainUser }}>
         <div>

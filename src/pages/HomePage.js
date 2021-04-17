@@ -11,12 +11,14 @@ function HomePage() {
 
   useEffect(() => {
     // Get all devices to populate whole list
-    CheckoutHistoryService.getAllHistory()
-      .then(res => {
-        if(res.data) {
-          setHistory(res.data)
-        }
-      });
+    if(currUser) {
+      CheckoutHistoryService.getAllHistory()
+        .then(res => {
+          if(res.status === 200) {
+            setHistory(res.data)
+          }
+        });
+    }
   }, [])
 
   function historyList() {
