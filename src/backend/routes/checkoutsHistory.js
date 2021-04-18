@@ -7,7 +7,7 @@ const authMiddleware = require("../middleware/auth.middleware");
 
 // Get all checkouts history
 router.route('/history').get(authMiddleware, (req, res) => {
-  CheckoutHistory.find({}, null, {limit: 10, sor: {'epoch': -1}})
+  CheckoutHistory.find({}, null, {limit: 10, sort: { 'createdAt' : -1 }})
     .populate({ path: 'device_id', select: ['tag', 'make', 'modelName'], model: Device })
     .populate({path: 'user_id', select: 'fullname', model: User})
       .then(checkouts => {
@@ -18,7 +18,7 @@ router.route('/history').get(authMiddleware, (req, res) => {
 
 // Get checkout history for user
 router.route('/history/user/:id').get(authMiddleware, (req, res) => {
-  CheckoutHistory.find({user_id: mongoose.Types.ObjectId(req.params.id)})
+  CheckoutHistory.find({user_id: mongoose.Types.ObjectId(req.params.id)}, null, {limit: 10, sort: { 'createdAt' : -1 }})
     .populate({ path: 'device_id', select: ['tag', 'make', 'modelName'], model: Device })
       .then(checkouts => res.status(200).json(checkouts))
       .catch(err => res.status(400).json('Error: ' + err));
@@ -26,7 +26,7 @@ router.route('/history/user/:id').get(authMiddleware, (req, res) => {
 
 // Get checkout history for device
 router.route('/history/device/:id').get(authMiddleware, (req, res) => {
-  CheckoutHistory.find({device_id: mongoose.Types.ObjectId(req.params.id)})
+  CheckoutHistory.find({device_id: mongoose.Types.ObjectId(req.params.id)}, null, {limit: 10, sort: { 'createdAt' : -1 }})
     .populate({path: 'user_id', select: 'fullname', model: User})
       .then(checkouts => res.status(200).json(checkouts))
       .catch(err => res.status(400).json('Error: ' + err));

@@ -22,7 +22,7 @@ function UserPage(props) {
 
   useEffect(() => {
     // Get all devices to populate whole list
-    CheckoutHistoryService.getUserHistory(currUser.id)
+    CheckoutHistoryService.getUserHistory(props.match.params.id)
       .then(res => {
         if(res.data) {
           setHistory(res.data)
