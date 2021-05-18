@@ -18,7 +18,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongo-seeding-cli": "^3.6.0",
     "mongodb": "^3.6.0",
-    "mongoose": "^5.10.0",
+    "mongoose": "^5.12.9",
     "nodemon": "^2.0.4",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
@@ -52,5 +52,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^7.26.0",
+    "eslint-plugin-react": "^7.23.2"
   }
 }

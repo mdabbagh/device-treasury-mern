@@ -5,7 +5,7 @@ function UserEditPage(props) {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [, setConfirmPassword] = useState("");
   const [admin, setAdmin] = useState(false);
   const [originalEmail, setOriginalEmail] = useState("");
 
@@ -23,7 +23,7 @@ function UserEditPage(props) {
       isAdmin: admin
     }
 
-    UserService.updateUser(props.match.params.id, user).then(res => {
+    UserService.updateUser(props.match.params.id, user).then(() => {
       window.location = '/';
     });
   }
@@ -33,25 +33,25 @@ function UserEditPage(props) {
       <h2>Editing {originalEmail}</h2>
       <form onSubmit={postEditUser}>
         <div className="form-group">
-          <label for="fullname">Full name</label>
+          <label htmlFor="fullname">Full name</label>
           <input type="text" className="form-control" id="fullname" placeholder="Enter full name" 
             onChange={e => {setFullname(e.target.value)}}
           />
         </div>
         <div className="form-group">
-          <label for="email">Email</label>
+          <label htmlFor="email">Email</label>
           <input type="email" className="form-control" id="email" placeholder="Enter email" 
             onChange={e => {setEmail(e.target.value)}}
           />
         </div>
         <div className="form-group">
-          <label for="password">Password</label>
+          <label htmlFor="password">Password</label>
           <input type="password" className="form-control" id="password" 
             onChange={e => {setPassword(e.target.value)}}
           />
         </div>
         <div className="form-group">
-          <label for="confirmPassword">Confirm Password</label>
+          <label htmlFor="confirmPassword">Confirm Password</label>
           <input type="password" className="form-control" id="confirmPassword" 
             onChange={e => {setConfirmPassword(e.target.value)}}
           />
@@ -60,7 +60,7 @@ function UserEditPage(props) {
           <input type="checkbox" className="form-check-input" id="isAdminCheck" 
             onChange={e => {setAdmin(e.target.checked)}}
           />
-          <label className="form-check-label" for="isAdminCheck">Make Admin</label>
+          <label className="form-check-label" htmlFor="isAdminCheck">Make Admin</label>
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>

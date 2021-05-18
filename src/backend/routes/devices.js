@@ -9,7 +9,7 @@ const User = require('../models/user.model');
 router.route('/').get(authMiddleware, (req, res) => {
   Device.find()
     .then(devices => res.status(200).json(devices))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(() => res.status(400).json('Error getting devices'));
 });
 
 // Add a device

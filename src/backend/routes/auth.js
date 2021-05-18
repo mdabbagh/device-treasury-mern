@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 var User = require('../models/user.model');
@@ -9,18 +10,18 @@ router.route('/login').post((req, res) => {
 
   User.findOne({'email': email}).then(user => {
     if(!user) {
-      return res.status(400).json("Failed LOG IN");
+      return res.status(400).json("Failed to login.");
     }
 
     user.comparePassword(password, (err, isMatch) => {
-      if(err) res.status(400).json("ERROR during password comparison");
+      if(err) res.status(400).json("Failed to login. Wrong username or password.");
 
       if(!isMatch) {
-        res.status(400).json("FAILED password check");
+        res.status(400).json("Failed to login. Wrong username or password.");
       } else {
         const userDetails = {id: user.id, isAdmin: user.isAdmin, fullname: user.fullname, email: user.email};
         const accessToken = generateAccessToken(user.id);
-        const refreshToken = jwt.sign({id: user.id}, process.env.REFRESH_SECRET_TOKEN, {expiresIn: '30m'});
+        const refreshToken = jwt.sign({id: user.id}, process.env.REFRESH_SECRET_TOKEN, {expiresIn: '24h'});
         let userId = user.id;
         let refToken = new Token({userId: userId, token: refreshToken})
         refToken.save()
@@ -35,7 +36,7 @@ router.route('/token').post((req, res) => {
   if (refreshToken === null) return res.status(401);
   Token.findOne({'token': refreshToken}).then((result, err) => {
     if (err) return res.status(403);
-    jwt.verify(refreshToken, process.env.REFRESH_SECRET_TOKEN, function(err, decoded) {
+    jwt.verify(refreshToken, process.env.REFRESH_SECRET_TOKEN, function(err) {
       if(err) {
         return res.status(403).json({ error: err });
       }
@@ -46,7 +47,7 @@ router.route('/token').post((req, res) => {
 })
 
 function generateAccessToken(userId) {
-  return jwt.sign({id: userId}, process.env.SECRET_TOKEN, {expiresIn: '2m'});
+  return jwt.sign({id: userId}, process.env.SECRET_TOKEN, {expiresIn: '30m'});
 }
 
 module.exports = router;

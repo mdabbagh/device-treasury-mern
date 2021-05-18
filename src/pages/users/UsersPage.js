@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import UserService from '../../services/user.service';
 import User from '../../components/User';
 
-function UsersPage(props) {
+function UsersPage() {
   const [users, setUsers] = useState("");
 
   useEffect(() => {

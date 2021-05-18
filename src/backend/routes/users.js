@@ -7,7 +7,7 @@ const adminMiddleware = require("../middleware/admin.middleware");
 router.route('/').get(authMiddleware, (req, res) => {
   User.find()
     .then(users => res.json(users))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(() => res.status(400).json('Error getting users.'));
 });
 
 // Add a user
@@ -20,7 +20,7 @@ router.route('/add').post([authMiddleware,adminMiddleware], (req, res) => {
   let newUser = new User({fullname, email, password, isAdmin});
   newUser.save()
     .then(() => res.json('User added'))
-    .catch(err => res.status(400).json('Error blah: ' + err));
+    .catch(() => res.status(400).json('Error adding users.'));
 });
 
 // Get a user
@@ -29,14 +29,14 @@ router.route('/:id').get(authMiddleware, (req, res) => {
     .then(user => {
       res.status(200).json(user)
     })
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(() => res.status(400).json('Error getting user.'));
 });
 
 // Delete a user
 router.route('/delete/:id').delete([authMiddleware,adminMiddleware], (req, res) => {
   User.findByIdAndDelete(req.params.id)
     .then(() => res.json('User deleted'))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(() => res.status(400).json('Error deleting user.'));
 });
 
 // Update a user
@@ -50,9 +50,9 @@ router.route('/update/:id').post([authMiddleware,adminMiddleware], (req, res) =>
 
       user.save()
         .then(() => res.json('User updated'))
-        .catch((err) => res.status(400).json('Error: ' + err));
+        .catch(() => res.status(400).json('Error updating user.'));
     })
-    .catch((err) => res.status(400).json('Error: ' + err));
+    .catch(() => res.status(400).json('Error updating user.'));
 });
 
 module.exports = router;

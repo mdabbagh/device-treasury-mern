@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useUserContext } from "../context/user.context";
 
-function Header(props) {
+function Header() {
   const {currUser, setCurrUser} = useUserContext();
 
   function logOut() {

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import UserService from '../../services/user.service';
 
-function UserCreatePage(props) {
+function UserCreatePage() {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [, setConfirmPassword] = useState("");
   const [admin, setAdmin] = useState(false);
 
   const postUser = e => {
@@ -29,25 +29,25 @@ function UserCreatePage(props) {
     <div>
       <form onSubmit={postUser}>
         <div className="form-group">
-          <label for="fullname">Full name</label>
+          <label htmlFor="fullname">Full name</label>
           <input type="text" className="form-control" id="fullname" placeholder="Enter full name" 
             onChange={e => {setFullname(e.target.value)}}
           />
         </div>
         <div className="form-group">
-          <label for="email">Email</label>
+          <label htmlFor="email">Email</label>
           <input type="email" className="form-control" id="email" placeholder="Enter email" 
             onChange={e => {setEmail(e.target.value)}}
           />
         </div>
         <div className="form-group">
-          <label for="password">Password</label>
+          <label htmlFor="password">Password</label>
           <input type="password" className="form-control" id="password" 
             onChange={e => {setPassword(e.target.value)}}
           />
         </div>
         <div className="form-group">
-          <label for="confirmPassword">Confirm Password</label>
+          <label htmlFor="confirmPassword">Confirm Password</label>
           <input type="password" className="form-control" id="confirmPassword" 
             onChange={e => {setConfirmPassword(e.target.value)}}
           />
@@ -56,7 +56,7 @@ function UserCreatePage(props) {
           <input type="checkbox" className="form-check-input" id="isAdminCheck" 
             onChange={e => {setAdmin(e.target.checked)}}
           />
-          <label className="form-check-label" for="isAdminCheck">Make Admin</label>
+          <label className="form-check-label" htmlFor="isAdminCheck">Make Admin</label>
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>

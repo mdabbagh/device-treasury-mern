@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useUserContext } from "../context/user.context";
-import UserService from '../services/user.service';
 import CheckoutHistoryService from '../services/checkout.history.service'
 import History from '../components/History';
 
 function HomePage() {
-  const {currUser, setCurrUser} = useUserContext();
-  const [user, setUser] = useState();
+  const {currUser, } = useUserContext();
   const [history, setHistory] = useState();
 
   useEffect(() => {
@@ -17,7 +15,7 @@ function HomePage() {
           if(res.status === 200) {
             setHistory(res.data)
           }
-        });
+        })
     }
   }, [])
 

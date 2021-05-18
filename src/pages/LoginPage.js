@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { useUserContext } from '../context/user.context';
 import AuthService from '../services/auth.service';
 
 function LoginPage() {
-  const {currUser, setCurrUser} = useUserContext();
+  const {, setCurrUser} = useUserContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);

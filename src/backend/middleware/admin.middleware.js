@@ -7,6 +7,7 @@ const admin = (req, res, next) => {
     const token = authHeader && authHeader.split(' ')[1]
     if (!token) return res.status(401).json({ error: "No authentication token, access denied" }); 
 
+    // eslint-disable-next-line no-undef
     const verified = jwt.verify(token, process.env.SECRET_TOKEN); 
     if (!verified) return res.status(401).json({ error: "Token verification failed, authorization denied" }); 
     req.user = verified.id; 

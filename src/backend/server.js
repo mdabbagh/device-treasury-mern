@@ -17,6 +17,7 @@ db.once('open', function() {
 });
 
 // SERVER
+// eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 3001;
 const app = express();
 app.use(cors());
@@ -25,7 +26,7 @@ app.use(bodyParser.json());
 const usersRoutes = require('./routes/users');
 const devicesRoutes = require('./routes/devices');
 const authRoutes = require('./routes/auth');
-const checkoutRoutes = require('./routes/checkoutsHistory')
+const checkoutRoutes = require('./routes/checkoutsHistory');
 
 app.use('/api/users', usersRoutes);
 app.use('/api/devices', devicesRoutes);

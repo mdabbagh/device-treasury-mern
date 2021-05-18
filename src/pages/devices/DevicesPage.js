@@ -5,7 +5,7 @@ import UserService from '../../services/user.service';
 import Device from '../../components/Device';
 import { useUserContext } from "../../context/user.context";
 
-function DevicesPage(props) {
+function DevicesPage() {
   const [devices, setDevices] = useState([]);
   const [userDevices, setUserDevices] = useState([]);
   const {currUser} = useUserContext();

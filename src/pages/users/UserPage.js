@@ -7,7 +7,7 @@ import History from '../../components/History';
 function UserPage(props) {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
-  const {currUser, setCurrUser} = useUserContext();
+  const {currUser, } = useUserContext();
   const [history, setHistory] = useState();
 
   useEffect(() => {
