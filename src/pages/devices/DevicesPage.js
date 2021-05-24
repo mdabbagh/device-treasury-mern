@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import DeviceService from '../../services/device.service';
 import UserService from '../../services/user.service';
@@ -77,6 +78,11 @@ function DevicesPage() {
 
   return (
     <div>
+      { currUser.isAdmin ? 
+        <NavLink type="button" className="btn btn-primary" to='/devices/create/' style={{marginBottom: "15px"}}>Add Device</NavLink>
+       : 
+        null
+      }
       <table className="table">
         <thead className="thead-light">
           <tr>

@@ -35,8 +35,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "seed": "seed -u 'mongodb://localhost:27017/dtreasury_dev' ./src/data/users/users.js",
-    "seed-local": "seed -u 'mongodb://localhost:27017/dtreasury_dev' ./src/data/devices"
+    "seed-local": "seed -u 'mongodb://localhost:27017/dtreasury_dev' ./src/data/"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -54,7 +53,6 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^7.26.0",
     "eslint-plugin-react": "^7.23.2"
   }
 }
