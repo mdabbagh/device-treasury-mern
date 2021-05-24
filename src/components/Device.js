@@ -27,7 +27,7 @@ function Device(props) {
             <td>
               <Link to={{pathname: "/devices/edit/" + props.device._id, 
                 state: {
-                  tag: props.device.tag
+                  device: props.device
                 }}}>
                 edit
               </Link>

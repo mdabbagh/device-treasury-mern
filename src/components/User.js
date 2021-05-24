@@ -15,7 +15,7 @@ function User(props) {
             <td>
               <Link to={{pathname: "/users/edit/" + props.user._id, 
                 state: {
-                  email: props.user.email
+                  user: props.user
                 }}}>
                 edit</Link>
             </td>
